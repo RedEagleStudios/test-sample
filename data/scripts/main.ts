@@ -1,6 +1,6 @@
 import { system, world } from "@minecraft/server";
 
-// This will print Hello world every 20 seconds
+// This will print Hello world every 5 seconds
 system.runInterval(() => {
     world.sendMessage("Hello, world!");
 }, secondToTick(5));
