@@ -9,9 +9,9 @@
   "regolith": {
     "dataPath": "./data",
     "filterDefinitions": {
-      "esbuild_deno": {
+      "esbuild": {
         "url": "github.com/ink0rr/regolith-filters",
-        "version": "0.1.3"
+        "version": "0.1.0"
       }
     },
     "profiles": {
@@ -21,7 +21,7 @@
         },
         "filters": [
           {
-            "filter": "esbuild_deno"
+            "filter": "esbuild"
           }
         ]
       },
