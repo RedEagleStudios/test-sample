@@ -1,0 +1,33 @@
+name: Release
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+      - name: bun install
+        shell: bash
+        run: bun install
+      - uses: ink0rr/rgl-action@v1
+        with:
+          profile: build
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create MCAddon
+        uses: vimtor/action-zip@v1.2
+        with:
+          files: build/
+          dest: ${{ github.event.repository.name }}@${{ github.ref_name }}.mcaddon
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            *.mcaddon
+            **/*.mcworld
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
