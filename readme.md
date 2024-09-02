@@ -28,7 +28,7 @@ irm rgl.ink0rr.dev/install.ps1 | iex
 ```
 2. Install bun & node
 ```
-brew install bun
+brew install oven-sh/bun/bun
 brew install node
 ```
 3. Install rgl:
