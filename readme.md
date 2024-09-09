@@ -11,7 +11,7 @@ Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
 2. Install bun & Node:
 ```
 scoop install bun
-scoop install nodejs
+scoop install node-lts
 ```
 
 3. Install rgl:
