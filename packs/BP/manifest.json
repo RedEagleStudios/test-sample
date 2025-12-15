@@ -3,7 +3,7 @@
   "header": {
     "name": "pack.name",
     "description": "pack.description",
-    "uuid": "128d3d13-442f-4ae6-adeb-48d16a3e5ecf",
+    "uuid": "c8ca90af-5a5c-4ab2-a3b9-b4b574c7be1b",
     "version": [
       1,
       0,
@@ -18,7 +18,7 @@
   "modules": [
     {
       "type": "data",
-      "uuid": "ad9a9d9a-479c-4a57-83f9-958e97386324",
+      "uuid": "07ed551d-4d9e-441d-8444-3f8d68e4ea03",
       "version": [
         1,
         0,
@@ -37,11 +37,11 @@
   "dependencies": [
     {
       "module_name": "@minecraft/server",
-      "version": "2.4.0"
+      "version": "1.9.0"
     },
     {
       "module_name": "@minecraft/server-ui",
-      "version": "2.0.0"
+      "version": "1.0.0"
     },
     {
       "uuid": "d23f5893-d2fc-41c4-9c26-caaa86166c3e",
