@@ -1,0 +1,114 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "re_dra:dragon",
+      "materials": { "animated": "re_dra_anim", "default": "villager_v2" },
+      "textures": {
+        "default": "textures/re/drg/entity/dragon"
+      },
+      "geometry": {
+        "default": "geometry.re_dr.dragon_all"
+      },
+      "animations": {
+        "root": "controller.animation.re_dr.dragon_all.dragon_update",
+        "flying": "animation.re_dr.dragon_all.flying",
+        "idle_ground": "animation.re_dr.dragon_all.idle_ground",
+        "ground_to_fly": "animation.re_dr.dragon_all.ground_to_fly",
+        "fly_to_ground": "animation.re_dr.dragon_all.fly_to_ground",
+        "glide": "animation.re_dr.dragon_all.glide",
+        "head_look": "animation.re_dr.dragon_all.head_look",
+        "walk": "animation.re_dr.dragon_all.walk",
+        "dive": "animation.re_dr.dragon_all.dive",
+        "idle_fly": "animation.re_dr.dragon_all.idle_fly"
+      },
+      "scripts": {
+        "initialize": [
+          "v.head_choice = 0;",
+          "v.blink_timer = 0;",
+          "v.look_x = 0;",
+          "v.look_y = 0;",
+          "v.rand_1 = 0;",
+          "v.rand_2 = 0;",
+          "v.vertical_speed = 0;",
+          "v.speed_multiplier = 0;",
+          "v.movement_distance_scale = 0.025;",
+          "v.yaw_direction = 0;",
+          "v.yaw_direction_smooth = 0;",
+          "v.amplitude = 0.75;",
+          "v.frequency = 0.05;",
+          "v.global_scale = 1;",
+          "v.local_scale = 1;",
+          "v.time_span = 0;",
+          "v.movement_period = 0;",
+          "v.yaw_rotation_speed = 0;",
+          "v.yaw_rotation_smooth = 0;",
+          "v.rotation_offset = 0;",
+          "v.rotation_smooth = 0;",
+          "v.time_on_ground = 0;",
+          "v.time_since_ground = 0;",
+          "v.flap_goal = 0.25;",
+          "v.wing_duration = 225;",
+          "v.flight_speed = 2;",
+          "v.flap_rate = 1.75;",
+          "v.arc_base = 0.25;",
+          "v.arc = 0;",
+          "v.fatigue = 0;",
+          "v.max_flap = 0;",
+          "v.min_flap = 0;",
+          "v.max_ascend = 0;",
+          "v.smooth = 0;",
+          "v.dive_start = 0;",
+          "v.dive_time = 0;",
+          "v.flap_start = 0;",
+          "v.flap_time = 0;",
+          "v.last_flap_time = 0;",
+          "v.calc_x = 0;",
+          "v.calc_y = 0;",
+          "v.mem_x = 0;",
+          "v.mem_y = 0;"
+        ],
+        "pre_animation": [
+          "v.head_choice = math.ceil(math.random_integer(1,2));",
+          "v.rand_1 = Math.ceil(Math.random(-250, 250));",
+          "v.rand_2 = Math.ceil(Math.random(-250, 250));",
+          "v.vertical_speed = Math.abs(q.vertical_speed-v.vertical_speed)*2 < 1 ? v.vertical_speed : (q.vertical_speed-v.vertical_speed > 0 ? v.vertical_speed+0.5 : v.vertical_speed-0.5);",
+          "v.vertical_speed = q.vertical_speed>=0 ? 0 : v.vertical_speed;",
+          "v.speed_multiplier = !q.is_tamed && q.has_player_rider ? 540 : 180;",
+          "v.yaw_direction = Math.abs(q.yaw_speed)<20 ? 0 : (q.yaw_speed+1)/Math.abs(q.yaw_speed+1);",
+          "v.yaw_direction_smooth = Math.abs(v.yaw_direction-v.yaw_direction_smooth) < 0.04 ? v.yaw_direction_smooth : (v.yaw_direction-v.yaw_direction_smooth > 0 ? v.yaw_direction_smooth+0.02 : v.yaw_direction_smooth-0.02 );",
+          "v.time_span = v.speed_multiplier*(q.life_time+v.movement_period);",
+          "v.movement_period = q.modified_distance_moved*v.movement_distance_scale;",
+          "v.period_multiplier = 1;",
+          "v.yaw_rotation_speed = q.yaw_speed/10;",
+          "v.yaw_rotation_smooth = Math.abs(v.yaw_rotation_speed-v.yaw_rotation_smooth) < 2 ? v.yaw_rotation_smooth : (v.yaw_rotation_speed-v.yaw_rotation_smooth > 0 ? v.yaw_rotation_smooth+0.5 : v.yaw_rotation_smooth-0.5);",
+          "v.rotation_smooth = q.is_on_ground ? Math.abs(q.body_y_rotation*0.60) : v.rotation_smooth;",
+          "v.rotation_smooth = Math.abs(q.body_y_rotation*0.60-v.rotation_smooth) < 2 ? v.rotation_smooth :( q.is_jumping ? (0-v.rotation_smooth > 0 ? v.rotation_smooth+1 : v.rotation_smooth-1) : (Math.abs(q.body_y_rotation*0.60)-v.rotation_smooth > 0 ? v.rotation_smooth+0.4 : v.rotation_smooth-0.4));",
+          "v.rotation_offset = Math.abs(Math.abs(q.body_y_rotation*0.60)-v.rotation_smooth)*v.yaw_direction_smooth;",
+          "v.time_on_ground = q.is_on_ground ? q.life_time : v.time_on_ground;",
+          "v.time_since_ground = q.life_time-v.time_on_ground;",
+          "v.flap_start = q.is_jumping ? q.life_time : v.flap_start;",
+          "v.flap_time = q.life_time - v.flap_start;",
+          "v.last_flap_time = v.flap_time > 5 ? 8 : (q.is_jumping ? v.last_flap_time - 1 : v.last_flap_time);",
+          "v.max_flap = 38.2;",
+          "v.min_flap = 33;",
+          "v.max_ascend = 5;",
+          "v.arc = v.arc_base * (Math.lerp(0, 1, (!q.is_tamed && q.has_player_rider ? 1.7 : Math.clamp(-v.fatigue / 25, 1, 20))));",
+          "v.fatigue_value = Math.clamp((-q.vertical_speed + 0.01) / (Math.abs(q.modified_move_speed) + 0.01), -50, 10);",
+          "v.fatigue = Math.abs(v.fatigue - v.fatigue_value) > 1 ? (v.fatigue - v.fatigue_value > 0 ? v.fatigue - 0.2 : v.fatigue + 0.8) : v.fatigue;",
+          "v.smooth = 0.5 * Math.exp(-Math.pow(v.flap_time - 0.55, 2) / 0.06);",
+          "v.dive_start = query.vertical_speed < -12 && !q.is_jumping && !q.is_on_ground ? v.dive_start : q.life_time;",
+          "v.dive_time = q.life_time - v.dive_start;"
+        ],
+        "animate": [
+          "root"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.default"
+      ],
+      "spawn_egg": { "texture": "apple" },
+      "enable_attachables": true
+    }
+  }
+}
