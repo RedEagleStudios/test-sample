@@ -1,5 +1,10 @@
 import { system, world } from "@minecraft/server";
 
+import "./DragonFlightSensor.ts";
+import "./onSpawn.ts";
+import "./onInteract.ts";
+
+
 // This will print Hello world every 5 seconds
 system.runInterval(() => {
     world.sendMessage("Hello, world!");
